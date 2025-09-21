@@ -65,6 +65,7 @@ pip install matplotlib seaborn
 
 7) Optional (logging, interpretability)
 pip install captum transformers-interpret
+```
 
 ## Running LoRA Finetuning
 After installation, you can finetune EffiChem with **LoRA adapters** on different datasets.We provide Jupyter Notebooks for LoRA finetuning on all datasets. Each notebook is pre-configured with **Weights & Biases (W&B)** integration for logging and hyperparameter management, so you do **not** need to manually set training parameters (e.g., `lora_r`, `lora_alpha`, learning rate). W&B handles sweeps and experiment tracking automatically.
