@@ -43,25 +43,25 @@ This repository contains the implementation of **EffiChem**, described in:
 We recommend using **micromamba** for environment management (faster and lighter than conda).
 
 ```bash
-# 1) Create new environment
+1) Create new environment
 micromamba create -n effichem python=3.10 -y
 micromamba activate effichem
 
-# 2) Core PyTorch + HuggingFace + PEFT stack
+2) Core PyTorch + HuggingFace + PEFT stack
 pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
 pip install transformers accelerate datasets peft evaluate wandb
 
-# 3) Chemistry tools (RDKit)
+3) Chemistry tools (RDKit)
 micromamba install -c conda-forge rdkit -y
 
-# 4) Tree-based models + hyperparameter tuning
+4) Tree-based models + hyperparameter tuning
 pip install optuna lightgbm catboost xgboost
 
-# 5) Data science & utils
+5) Data science & utils
 pip install pandas numpy scikit-learn joblib
 
-# 6) Visualization
+6) Visualization
 pip install matplotlib seaborn
 
-# 7) Optional (logging, interpretability)
+7) Optional (logging, interpretability)
 pip install captum transformers-interpret
