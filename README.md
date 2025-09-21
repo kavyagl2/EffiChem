@@ -72,6 +72,7 @@ After installation, you can finetune EffiChem with **LoRA adapters** on differen
 
 | Dataset | Description | Notebook Link |
 |---------|-------------|---------------|
-| **BBBP** | Blood–Brain Barrier Permeability | [finetune_bbbp.ipynb](notebooks/finetune_bbbp.ipynb) |
-| **ClinTox** | Drug Toxicity | [finetune_clintox.ipynb](notebooks/finetune_clintox.ipynb) |
-| **Flavor / FART** | Molecular Flavor Classification | [finetune_flavor.ipynb](notebooks/finetune_flavor.ipynb) |
+| **BBBP** | Blood–Brain Barrier Permeability | [finetune_bbbp.ipynb](https://github.com/kavyagl2/EffiChem/blob/main/lora_finetuned_models/bbbp_task/finetune_bbbp.ipynb) |
+| **ClinTox** | Drug Toxicity | [finetune_clintox.ipynb](https://github.com/kavyagl2/EffiChem/blob/main/lora_finetuned_models/clintox_task/finetune_clintox.ipynb) |
+| **Flavor / FART** | Molecular Flavor Classification | [finetune_flavor.ipynb](https://github.com/kavyagl2/EffiChem/blob/main/lora_finetuned_models/flavor_task/finetune_flavor.ipynb) |
+
