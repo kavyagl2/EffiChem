@@ -27,7 +27,7 @@ This repository contains the implementation of **EffiChem**, described in:
 ## Table of Contents
 
 1. [Installation](#installation)  
-2. [Quickstart](#quickstart)  
+2. [Running LoRA Finetuning](#runninglorafinetuning)  
 3. [Reproduce Paper Results](#reproduce-paper-results)  
 4. [Repository Structure](#repository-structure)  
 5. [How EffiChem Works](#how-effichem-works)  
@@ -65,3 +65,12 @@ pip install matplotlib seaborn
 
 7) Optional (logging, interpretability)
 pip install captum transformers-interpret
+
+## Running LoRA Finetuning
+After installation, you can finetune EffiChem with **LoRA adapters** on different datasets.We provide Jupyter Notebooks for LoRA finetuning on all datasets. Each notebook is pre-configured with **Weights & Biases (W&B)** integration for logging and hyperparameter management, so you do **not** need to manually set training parameters (e.g., `lora_r`, `lora_alpha`, learning rate). W&B handles sweeps and experiment tracking automatically.
+
+| Dataset | Description | Notebook Link |
+|---------|-------------|---------------|
+| **BBBP** | Blood–Brain Barrier Permeability | [finetune_bbbp.ipynb](notebooks/finetune_bbbp.ipynb) |
+| **ClinTox** | Drug Toxicity | [finetune_clintox.ipynb](notebooks/finetune_clintox.ipynb) |
+| **Flavor / FART** | Molecular Flavor Classification | [finetune_flavor.ipynb](notebooks/finetune_flavor.ipynb) |
