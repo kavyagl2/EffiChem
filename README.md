@@ -95,9 +95,9 @@ The tree models pipeline consists of four integrated components:
 ### Steps to Run Tree Models
 
 **Extract Embeddings**
-BBBP: [BBBP Embedding Extraction](https://github.com/kavyagl2/EffiChem/blob/main/Tree_models/bbbp_notebook/embedding_bbbp.ipynb)
-ClinTox: [Clintox Embedding Extraction](https://github.com/kavyagl2/EffiChem/blob/main/Tree_models/clintox_notebook/embedding_clintox.ipynb)
-Flavor: [Flavor Embedding Extraction](https://github.com/kavyagl2/EffiChem/blob/main/Tree_models/flavor_notebook/embedding_extraction.ipynb)
+- BBBP: [BBBP Embedding Extraction](https://github.com/kavyagl2/EffiChem/blob/main/Tree_models/bbbp_notebook/embedding_bbbp.ipynb)
+- ClinTox: [Clintox Embedding Extraction](https://github.com/kavyagl2/EffiChem/blob/main/Tree_models/clintox_notebook/embedding_clintox.ipynb)
+- Flavor: [Flavor Embedding Extraction](https://github.com/kavyagl2/EffiChem/blob/main/Tree_models/flavor_notebook/embedding_extraction.ipynb)
 
 **Final Execution (main script)**
 - Update the CSV file paths in main.py with your saved embedding files.
