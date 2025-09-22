@@ -28,8 +28,8 @@ This repository contains the implementation of **EffiChem**, described in:
 
 1. [How EffiChem Works](#how-effichem-works)
 2. [Installation](#installation)
-3. [Running LoRA Finetuning](#runninglorafinetuning)
-4. [Running Tree Models](#runningtreemodels)
+3. [Running LoRA Finetuning](#running-lora-finetuning)
+4. [Running Tree Models](#running-tree-models)
 5. [Interpretability](#interpretability)   
 
 ---
@@ -80,3 +80,29 @@ After installation, you can finetune EffiChem with **LoRA adapters** on differen
 | **ClinTox** | Drug Toxicity | [finetune_clintox.ipynb](https://github.com/kavyagl2/EffiChem/blob/main/lora_finetuned_models/clintox_task/finetune_clintox.ipynb) |
 | **Flavor / FART** | Molecular Flavor Classification | [finetune_flavor.ipynb](https://github.com/kavyagl2/EffiChem/blob/main/lora_finetuned_models/flavor_task/finetune_flavor.ipynb) |
 
+---
+
+## Running TREE Models
+After completing LoRA finetuning, the next step involves running ensemble tree models (XGBoost, LightGBM, and CatBoost) on the generated embeddings combined with RDKit molecular descriptors.
+
+### Pipeline Overview
+The tree models pipeline consists of four integrated components: 
+- Embedding Generation - Extracting embeddings from LoRA finetuned models.
+- Embedding Processing - Load and convert LoRA-finetuned embeddings.
+- Feature Extraction - Calculate 17 RDKit molecular descriptors.
+- ML Modelling & Results - Downstream task evaluation using ensemble tree models (XGBoost, LightGBM, CatBoost) with hyperparameter optimization, training, and comprehensive evaluation with ROC/PR curves. 
+
+### Steps to Run Tree Models
+
+**Extract Embeddings**
+BBBP: [BBBP Embedding Extraction](https://github.com/kavyagl2/EffiChem/blob/main/Tree_models/bbbp_notebook/embedding_bbbp.ipynb)
+ClinTox: [Clintox Embedding Extraction](https://github.com/kavyagl2/EffiChem/blob/main/Tree_models/clintox_notebook/embedding_clintox.ipynb)
+Flavor: [Flavor Embedding Extraction](https://github.com/kavyagl2/EffiChem/blob/main/Tree_models/flavor_notebook/embedding_extraction.ipynb)
+
+**Final Execution (main script)**
+- Update the CSV file paths in main.py with your saved embedding files.
+- Execute the script:
+  ```bash
+  python main.py
+  ```
+> **Note:** Each folder contains the complete pipeline (embedding_processing.py, feature_extraction.py, ml_modelling.py, main.py) configured for the specific dataset.
