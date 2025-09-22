@@ -26,15 +26,11 @@ This repository contains the implementation of **EffiChem**, described in:
 
 ## Table of Contents
 
-1. [Installation](#installation)  
-2. [Running LoRA Finetuning](#runninglorafinetuning)  
-3. [Reproduce Paper Results](#reproduce-paper-results)  
-4. [Repository Structure](#repository-structure)  
-5. [How EffiChem Works](#how-effichem-works)  
-6. [Recommended Hyperparameters](#recommended-hyperparameters)  
-7. [Interpretability](#interpretability)  
-8. [Citation](#citation)  
-9. [FAQ](#faq)  
+1. [How EffiChem Works](#how-effichem-works)
+2. [Installation](#installation)
+3. [Running LoRA Finetuning](#runninglorafinetuning)
+4. [Running Tree Models](#runningtreemodels)
+5. [Interpretability](#interpretability)   
 
 ---
 
@@ -72,6 +68,8 @@ pip install matplotlib seaborn
 ```bash
 pip install captum transformers-interpret
 ```
+
+---
 
 ## Running LoRA Finetuning
 After installation, you can finetune EffiChem with **LoRA adapters** on different datasets. We provide Jupyter Notebooks for LoRA finetuning on all datasets. Each notebook is pre-configured with **Weights & Biases (W&B)** integration for logging and hyperparameter management, so you do **not** need to manually set training parameters (e.g., `lora_r`, `lora_alpha`, learning rate). W&B handles sweeps and experiment tracking automatically.
