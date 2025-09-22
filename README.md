@@ -45,36 +45,36 @@ We recommend using **micromamba** for environment management (faster and lighter
 **1) Create new environment**
 ```bash
 micromamba create -n effichem python=3.10 -y
-micromamba activate effichem```
-
+micromamba activate effichem
+````
 **2) Core PyTorch + HuggingFace + PEFT stack**
 ```bash
 pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
-pip install transformers accelerate datasets peft evaluate wandb```
-
+pip install transformers accelerate datasets peft evaluate wandb
+```
 **3) Chemistry tools (RDKit)**
 ```bash
-micromamba install -c conda-forge rdkit -y```
-
+micromamba install -c conda-forge rdkit -y
+```
 **4) Tree-based models + hyperparameter tuning**
 ```bash
-pip install optuna lightgbm catboost xgboost```
-
+pip install optuna lightgbm catboost xgboost
+```
 **5) Data science & utils**
 ```bash
-pip install pandas numpy scikit-learn joblib```
-
+pip install pandas numpy scikit-learn joblib
+```
 **6) Visualization**
 ```bash
-pip install matplotlib seaborn```
-
+pip install matplotlib seaborn
+```
 **7) Optional (logging, interpretability)**
 ```bash
 pip install captum transformers-interpret
 ```
 
 ## Running LoRA Finetuning
-After installation, you can finetune EffiChem with **LoRA adapters** on different datasets.We provide Jupyter Notebooks for LoRA finetuning on all datasets. Each notebook is pre-configured with **Weights & Biases (W&B)** integration for logging and hyperparameter management, so you do **not** need to manually set training parameters (e.g., `lora_r`, `lora_alpha`, learning rate). W&B handles sweeps and experiment tracking automatically.
+After installation, you can finetune EffiChem with **LoRA adapters** on different datasets. We provide Jupyter Notebooks for LoRA finetuning on all datasets. Each notebook is pre-configured with **Weights & Biases (W&B)** integration for logging and hyperparameter management, so you do **not** need to manually set training parameters (e.g., `lora_r`, `lora_alpha`, learning rate). W&B handles sweeps and experiment tracking automatically.
 
 | Dataset | Description | Notebook Link |
 |---------|-------------|---------------|
