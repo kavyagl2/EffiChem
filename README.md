@@ -26,7 +26,7 @@ This repository contains the implementation of **EffiChem**, described in:
 
 ## Table of Contents
 
-1. [How EffiChem Works](#how-effichem-works)
+1. [How EffiChem works](#how-effichem-works)
 2. [Installation](#installation)
 3. [Running LoRA Finetuning](#running-lora-finetuning)
 4. [Running Tree Models](#running-tree-models)
@@ -34,7 +34,38 @@ This repository contains the implementation of **EffiChem**, described in:
 
 ---
 
+## How EffiChem works
+EffiChem combines LoRA-finetuned molecular transformers with tree-based models for molecular property prediction. The workflow is summarised as follows:
+![EffiChem Workflow](assets/EffiChem%20Model%20Architecture.png)
 
+### 1. Base Model & Dataset
+- Start with a pre-trained transformer model (**MolFormer** or **ChemBERTa**).  
+- Provide a task-specific dataset (e.g., **BBBP**, **ClinTox**, **Flavor**).
+
+### 2. Custom LoRA Trainer
+- Fine-tune only linear layers using **LoRA weights** while keeping the base model frozen.  
+- Compute key metrics: **MCC, F1, Accuracy, AUC-ROC**.  
+- Use a suitable loss function for binary or multiclass classification.  
+- Optimize hyperparameters (**rank, alpha, dropout, learning rate**) using **Bayesian methods**.
+
+### 3. Merged Model Weights
+- Combine pre-trained base weights with updated LoRA weights to produce the **finetuned model**.
+
+### 4. Feature Extraction
+- Generate **molecular embeddings** from the finetuned model.  
+- Combine embeddings with **RDKit descriptors** (physicochemical and structural features) to form an enhanced feature space.
+
+### 5. Tree-Based Modeling
+- Train **XGBoost**, **LightGBM**, and **CatBoost** models on the combined feature set.  
+- Use **Optuna** for automatic hyperparameter tuning to maximise prediction performance.
+
+### 6. Evaluation on Test Samples
+- Input a new molecule (**SMILES string**).  
+- Pass it through the **finetuned transformer + RDKit features pipeline** to generate input features for tree models.  
+- Predict **binary or multiclass output** (e.g., property classification).  
+- Store **results, probabilities, and performance metrics** for visualization and analysis.
+- 
+---
 ## Installation
 We recommend using **micromamba** for environment management (faster and lighter than conda).
 
