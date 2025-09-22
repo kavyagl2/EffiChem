@@ -1,5 +1,5 @@
 # EffiChem — Efficient Adaptation of Chemical Language Models for Molecular Property Prediction  
-[![Paper](https://img.shields.io/badge/Preprint-ChemRxiv-+-doi-10.26434%2Fchemrxiv-2025-2lljt-blue)](https://chemrxiv.org/engage/chemrxiv/article-details/68b7f02e728bf9025ef4fcfc)  
+[![Preprint](https://img.shields.io/badge/Preprint-ChemRxiv-blue?logo=chemrxiv&style=flat-square)](https://chemrxiv.org/engage/chemrxiv/article-details/68b7f02e728bf9025ef4fcfc)
 
 This repository contains the implementation of **EffiChem**, described in:
 
@@ -87,10 +87,10 @@ After completing LoRA finetuning, the next step involves running ensemble tree m
 
 ### Pipeline Overview
 The tree models pipeline consists of four integrated components: 
-- Embedding Generation - Extracting embeddings from LoRA finetuned models.
-- Embedding Processing - Load and convert LoRA-finetuned embeddings.
-- Feature Extraction - Calculate 17 RDKit molecular descriptors.
-- ML Modelling & Results - Downstream task evaluation using ensemble tree models (XGBoost, LightGBM, CatBoost) with hyperparameter optimization, training, and comprehensive evaluation with ROC/PR curves. 
+1. Embedding Generation - Extracting embeddings from LoRA finetuned models.
+2. Embedding Processing - Load and convert LoRA-finetuned embeddings.
+3. Feature Extraction - Calculate 17 RDKit molecular descriptors.
+4. ML Modelling & Results - Downstream task evaluation using ensemble tree models (XGBoost, LightGBM, CatBoost) with hyperparameter optimization, training, and comprehensive evaluation with ROC/PR curves. 
 
 ### Steps to Run Tree Models
 
@@ -106,3 +106,6 @@ The tree models pipeline consists of four integrated components:
   python main.py
   ```
 > **Note:** Each folder contains the complete pipeline (embedding_processing.py, feature_extraction.py, ml_modelling.py, main.py) configured for the specific dataset.
+
+---
+
