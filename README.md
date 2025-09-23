@@ -64,7 +64,7 @@ EffiChem combines LoRA-finetuned molecular transformers with tree-based models f
 - Pass it through the **finetuned transformer + RDKit features pipeline** to generate input features for tree models.  
 - Predict **binary or multiclass output** (e.g., property classification).  
 - Store **results, probabilities, and performance metrics** for visualization and analysis.
-- 
+  
 ---
 ## Installation
 We recommend using **micromamba** for environment management (faster and lighter than conda).
