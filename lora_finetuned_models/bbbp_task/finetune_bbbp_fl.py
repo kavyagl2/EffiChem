@@ -35,7 +35,6 @@ from pprint import pprint
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import roc_auc_score, precision_score, recall_score, f1_score,matthews_corrcoef
 
-os.environ["CUDA_VISIBLE_DEVICES"]="0"
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 from dotenv import load_dotenv
@@ -98,10 +97,10 @@ def lora_config(r,lora_alpha,dropout):
 #Calculate class weights
 def class_weights_calculation(train_dataset):
 
-        # Calculate class weights based on the distribution of labels
-        class_weights = [1 - (train_dataset['labels'].count(0) / len(train_dataset['labels'])),
-                        1 - (train_dataset['labels'].count(1) / len(train_dataset['labels']))]
-        return torch.from_numpy(np.array(class_weights)).float()
+    # Calculate class weights based on the distribution of labels
+    class_weights = [1 - (train_dataset['labels'].count(0) / len(train_dataset['labels'])),
+                    1 - (train_dataset['labels'].count(1) / len(train_dataset['labels']))]
+    return torch.from_numpy(np.array(class_weights)).float()
 
 #Create custom weighted loss trainer
 class WeightedLossTrainer(Trainer):
@@ -188,7 +187,7 @@ import re
 
 #Perform a sweep using WANDb
 sweep_config = {
-"name": "BBBP_Hyperparameter_Tuning",
+"name": "BBBP_FL_Hyperparameter_Tuning",
 "method": "bayes",
 "metric": {
     "goal": "maximize", 
@@ -223,15 +222,15 @@ for model_name in model_list:
     def run_training():
         print(f"Running training for model: {model_id_clean}")
         # Initialize W&B with sweep
-        run = wandb.init(project="BBBP_Hyperparameter_Tuning")
+        run = wandb.init(project="BBBP_FL_Hyperparameter_Tuning")
         config = run.config
 
         print(f"Model ID cleaned: {model_id_clean}")
         run_id = wandb.run.id
 
         # Define unique output folders
-        save_dir = f"../{model_id_clean}/{run_id}"
-        logging_dir = f"../{model_id_clean}/{run_id}"
+        save_dir = f"./FL_Loss/{model_id_clean}/{run_id}"
+        logging_dir = f"./FL_Loss/{model_id_clean}/{run_id}"
         os.makedirs(save_dir, exist_ok=True)
 
         # Load tokenizer and model
@@ -257,8 +256,8 @@ for model_name in model_list:
             output_dir=save_dir,
             eval_strategy="epoch",
             learning_rate=config.lr,
-            per_device_train_batch_size=32,
-            per_device_eval_batch_size=32,
+            per_device_train_batch_size=128,
+            per_device_eval_batch_size=128,
             num_train_epochs=20,
             weight_decay=0.01,
             save_strategy="epoch",
@@ -289,6 +288,7 @@ for model_name in model_list:
             }
 
         # Train with weigted loss trainer
+        '''
         trainer = WeightedLossTrainer(
             model=lora_model,
             args=training_args,
@@ -297,9 +297,9 @@ for model_name in model_list:
             processing_class=tokenizer,
             compute_metrics=compute_metrics,
             callbacks=[EarlyStoppingCallback(early_stopping_patience=3)]
-        )
+        )'''
+
         
-        '''
         # train with focal loss trainer
         trainer = FocalLossTrainer(
             model=lora_model,
@@ -308,8 +308,8 @@ for model_name in model_list:
             eval_dataset=validation_data,
             processing_class=tokenizer,
             compute_metrics=compute_metrics,
-            callbacks=[EarlyStoppingCallback(early_stopping_patience=5)]
-        )'''
+            callbacks=[EarlyStoppingCallback(early_stopping_patience=3)]
+        )
 
         trainer.train()
         trainer.save_model(save_dir)
@@ -321,7 +321,7 @@ for model_name in model_list:
         wandb.finish()
  
     #Run a wandb agent
-    wandb.agent(sweep_id, function=run_training, count=2)
+    wandb.agent(sweep_id, function=run_training, count=20)
 
     #Perform a sweep
     api = wandb.Api()
@@ -368,7 +368,7 @@ MODEL_NAME_MAP = {
 test_data=pd.read_csv('bbbp_dataset/test_clean.csv')
 
 #Path to model root
-models_root_dir = "../" #add model saved path
+models_root_dir = "./FL_Loss/" #add model saved path
 output_dir = "./test_results_bbbp/"
 
 #Essential args for evaluation
@@ -429,7 +429,7 @@ for key in MODEL_NAME_MAP.keys():
 
     # Save Base Model with LoRA weights
     final_adapter_model = adapter_model.merge_and_unload()
-    save_path = "./weighted_loss_BBBP/"+key+"_LoRA_Finetuned/"
+    save_path = "./focal_loss_BBBP/"+key+"_LoRA_Finetuned/"
     final_adapter_model.save_pretrained(save_path)
 
     command1 = "rm -rf "+model_folder
@@ -437,9 +437,14 @@ for key in MODEL_NAME_MAP.keys():
 
 all_test_results_df = pd.DataFrame(all_test_results)
 all_test_results_df.columns = ["MCC","LOSS","Time","ACC","AUROC","PREC","REC","F1","RUNTIME","SAMPLE_PER_SECOND","STEPS_PER_SECOND","BEST_MODEL"]
+
+#Make all columns upto 3 precision points except for BEST_MODEL
+for col in all_test_results_df.columns:
+    if col != "BEST_MODEL":
+        all_test_results_df[col] = all_test_results_df[col].apply(lambda x: round(x, 3))
 print(all_test_results_df)
 
-all_test_results_df.to_csv(output_dir+"/weighted_loss_test_results.csv",header="infer",index=False)
+all_test_results_df.to_csv(output_dir+"/focal_loss_test_results.csv",header="infer",index=False)
 
 command2="rm -rf ./raghvendra5688 ./wandb"
 os.system(command2)
