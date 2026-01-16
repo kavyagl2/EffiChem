@@ -7,6 +7,7 @@
 #SBATCH --mem=10000
 #SBATCH -A A100
 #SBATCH -q a100_qos
+#SBATCH -w crimv3mgpu018
 
 module load cuda12.6/toolkit/12.6.2
 python --version

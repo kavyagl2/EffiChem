@@ -177,9 +177,10 @@ def compute_metrics(eval_pred):
         "eval_mcc_metric": mcc,
         "Accuracy": accuracy_metric.compute(predictions=predictions, references=labels)["accuracy"],
         "AUC-ROC": roc_auc_score(labels, probabilities),  # AUC-ROC requires probabilities
-        "Precision": precision_score(labels, predictions),
-        "Recall": recall_score(labels, predictions),
-        "F1-score": f1_score(labels, predictions)
+        "Precision": precision_score(labels, predictions, average="macro", zero_division=0),
+        "Recall": recall_score(labels, predictions, average="macro", zero_division=0),
+        "F1-score": f1_score(labels, predictions, average="macro"),
+        "F1-micro": f1_score(labels, predictions, average="micro")
     } 
 
 # %%
@@ -282,9 +283,10 @@ for model_name in model_list:
                 "eval_mcc_metric": mcc,
                 "Accuracy": accuracy_metric.compute(predictions=predictions, references=labels)["accuracy"],
                 "AUC-ROC": roc_auc_score(labels, probabilities),
-                "Precision": precision_score(labels, predictions),
-                "Recall": recall_score(labels, predictions),
-                "F1-score": f1_score(labels, predictions)
+                "Precision": precision_score(labels, predictions,average="macro",zero_division=0),
+                "Recall": recall_score(labels, predictions,average="macro",zero_division=0),
+                "F1-score": f1_score(labels, predictions,average="macro"),
+                "F1-micro": f1_score(labels, predictions, average="micro")
             }
 
         # Train with weigted loss trainer
@@ -436,7 +438,7 @@ for key in MODEL_NAME_MAP.keys():
     os.system(command1)
 
 all_test_results_df = pd.DataFrame(all_test_results)
-all_test_results_df.columns = ["MCC","LOSS","Time","ACC","AUROC","PREC","REC","F1","RUNTIME","SAMPLE_PER_SECOND","STEPS_PER_SECOND","BEST_MODEL"]
+all_test_results_df.columns = ["MCC","LOSS","Time","ACC","AUROC","PREC","REC","F1","F1_MICRO","RUNTIME","SAMPLE_PER_SECOND","STEPS_PER_SECOND","BEST_MODEL"]
 
 #Make all columns upto 3 precision points except for BEST_MODEL
 for col in all_test_results_df.columns:
