@@ -2,11 +2,14 @@
 #SBATCH -J bace_ft_wl
 #SBATCH -o out_bace_ft_wl.txt
 #SBATCH -e out_bace_ft_wl.err
-#SBATCH -p gpu-A100
+#SBATCH -p gpu-H200
 #SBATCH --gres=gpu:1
-#SBATCH --mem=80000
-#SBATCH -A A100
-#SBATCH -q a100_qos
+#SBATCH --mem=140000
+#SBATCH -A H200
+#SBATCH -q h200_qos
+#SBATCH -x crirdchpxd005
+#SBATCH -w crirdchpxd004
+
 
 module load cuda12.6/toolkit/12.6.2
 python --version
